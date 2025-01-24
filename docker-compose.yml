@@ -1,0 +1,26 @@
+services:
+  backend_contact:
+    image: aloel.dev/contact_api:1.0.0
+    build: .
+    ports:
+      - 8000:8000
+
+    networks:
+      - dev-network
+
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: '200m'
+        reservations:
+          cpus: '0.1'
+          memory: '100m'
+
+networks:
+  dev-network:
+    name: mysql_dev-network
+    external: true

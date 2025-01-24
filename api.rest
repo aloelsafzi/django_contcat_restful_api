@@ -1,0 +1,78 @@
+
+##### Contact Collection
+
+### get all contact
+GET http://localhost:8000/api/v1/contact/get-all
+
+### get all contact with pagination
+GET http://localhost:8000/api/v1/contact/get-all?page=2
+
+### get contact by id
+GET http://localhost:8000/api/v1/contact/get/1
+
+
+### create contact
+POST http://localhost:8000/api/v1/contact/create
+Content-Type: application/json
+
+{
+    "first_name":"John 11",
+    "last_name":"Doe 11",
+    "email":"jhon11@email.com",
+    "phone":"1234567890"
+}
+
+
+### update contact
+PUT http://localhost:8000/api/v1/contact/update
+Content-Type: application/json
+
+{
+    "id": 2,
+    "phone": "085886905504",
+    "first_address": "Jl. Jendral Sudirman",
+    "seconds_address": "Jl. Jendral Sudirman 2",
+    "user": 4
+}
+
+### delete contact
+DELETE http://localhost:8000/api/v1/contact/delete/1
+
+
+
+##### User Collection
+
+### get all user
+GET http://localhost:8000/api/v1/user/get-all
+
+### get user by id
+GET http://localhost:8000/api/v1/user/get/3
+
+
+### create user
+POST http://localhost:8000/api/v1/user/create
+Content-Type: application/json
+
+{
+    "username":"test",
+    "password":"password123",
+    "first_name":"test",
+    "last_name":"test",
+    "email":"aloel@email.com"
+}
+
+
+### update user
+PUT http://localhost:8000/api/v1/user/update
+Content-Type: application/json
+
+{
+    "id": 3,
+    "username": "jhon1236",
+    "email": "jhon@email.com",
+    "first_name": "jhon",
+    "last_name": "doe"
+  }
+
+### delete user
+DELETE http://localhost:8000/api/v1/user/delete/5
