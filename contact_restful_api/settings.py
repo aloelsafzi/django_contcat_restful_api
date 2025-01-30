@@ -9,12 +9,15 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import os
+from dotenv import load_dotenv
 
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -25,7 +28,7 @@ SECRET_KEY = 'django-insecure-lpp=5#hy+-dnc@j=87wf3tw3e46re(01nu1v!%r!u73ev8m7qz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -89,12 +92,12 @@ WSGI_APPLICATION = 'contact_restful_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': '127.0.0.1',
-        'NAME': 'contact_db',
-        'USER': 'root',
-        'PORT': '3306',
-        'PASSWORD': 'root',
+        'ENGINE': f"django.db.backends.{os.getenv('DB_ENGINE')}",
+        'HOST': os.getenv('DB_HOST'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PORT': os.getenv('DB_PORT'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
     }
 }
 
@@ -121,9 +124,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'id'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Jakarta'
 
 USE_I18N = True
 
@@ -146,8 +149,34 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Contact API',
     'DESCRIPTION': 'Contact API description',
     'VERSION': '1.0.0',
-    'SERVERS': [{'url': 'http://localhost:8000'}],
+    'SERVERS': [{'url': os.getenv('BASE_URL_API')}],
     'SERVE_INCLUDE_SCHEMA': False,
     'CONTACT': {'name': 'fauzi', 'email': 'samsul.vendor.pasti@pegadaian.co.id'},
     'LICENSE': {'name': 'MIT', 'url': 'https://opensource.org/licenses/MIT'},
+}
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {"class": "logging.StreamHandler"},
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": f"{BASE_DIR}/var/log/django_app.log",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "": {
+            "handlers": ["console", "file"],
+            "level": os.getenv('DJANGO_LOG_LEVEL', 'INFO')
+        }
+    },
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+    },
 }

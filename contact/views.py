@@ -9,6 +9,8 @@ from utils.response_api_serializer import ResponseAPISerializer
 from contact.models import Contact
 from contact.serializers import ContactSerializer, ContactRequestSerializer
 
+import logging
+logger = logging.Logger(__name__)
 
 
 @extend_schema(
@@ -54,6 +56,9 @@ def get_contact_by_id(request, id):
     try:
         contact = Contact.objects.get(id=id)
     except Contact.DoesNotExist:
+
+        logger.info(f'Contact not found id ({id})')
+
         return Response({
             'message': 'contact not found',
             'data': None,
